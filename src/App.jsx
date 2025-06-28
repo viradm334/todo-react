@@ -5,10 +5,14 @@ import './App.css'
 import AddTaskForm from './AddTaskForm'
 import TaskItem from './TaskItem'
 import TaskList from './TaskList'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
-    <AddTaskForm/>
+    <Routes>
+      <Route path='/' element={<AddTaskForm/>}/>
+      <Route path='/tasks' element={<TaskList/>}/>
+    </Routes>
   )
 }
 
