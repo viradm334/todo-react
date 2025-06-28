@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 
-function taskList(){
+function TaskList(){
     return(<>
     <h1>Hello</h1>
     </>)
 }
 
-export default taskList
+export default TaskList

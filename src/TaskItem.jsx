@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
-function taskItem(){
+function TaskItem(){
 
 }
 
-export default taskItem
+export default TaskItem

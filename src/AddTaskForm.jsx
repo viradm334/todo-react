@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-function addTaskForm(){
+function AddTaskForm(){
 
     const [tasks, setTasks] = useState(['Eat breakfast', 'Walk the dog', 'Take a shower']);
     const [newTask, setNewTask] = useState('');
@@ -61,4 +61,4 @@ function addTaskForm(){
     </>)
 }
 
-export default addTaskForm
+export default AddTaskForm
