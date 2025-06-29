@@ -1,19 +1,37 @@
 import React, {useState} from 'react'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import TaskItem from './TaskItem';
+
 
 function AddTaskForm(){
 
-    const [tasks, setTasks] = useState(['Eat breakfast', 'Walk the dog', 'Take a shower']);
-    const [newTask, setNewTask] = useState('');
+    const [tasks, setTasks] = useState([
+        { title: 'Eat breakfast', priority: 'High' },
+        { title: 'Walk the dog', priority: 'Low' },
+        { title: 'Take a shower', priority: 'Medium' }
+      ]);
+    const [newTask, setNewTask] = useState({
+        title: '',
+        priority: ''
+    });
 
     function handleInputChange(event){
-        setNewTask(event.target.value);
+        const {name, value} = event.target;
+        setNewTask(prev => ({
+            ...prev, 
+            [name]: value
+        }))
     }
 
     function addTask(){
 
-        if(newTask.trim() !== ''){
-            setTasks(t => [...t, newTask]);
-            setNewTask('');
+        if(newTask.title.trim() !== ''){
+            const taskToAdd = {
+                ...newTask
+            }
+            setTasks(prev => [...prev, taskToAdd]);
+            setNewTask({title: '', priority: ''});
         }
     }
 
@@ -40,23 +58,28 @@ function AddTaskForm(){
 
     return(<>
     <div className='to-do-list'>
-        <h1>To Do List</h1>
+        <h1>Add To Do List</h1>
 
-        <div>
-            <input type="text" placeholder='Enter task here' value={newTask} onChange={handleInputChange} />
-            <button className='add-button' onClick={addTask}>Add</button>
+        <div className='container mb-3 w-50'>
+            <div className='row'>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Control type="text" className='col-md-4 mb-3' name='title' value={newTask.title} onChange={handleInputChange} placeholder="Write your task title here..." />
+            </Form.Group>
+            <Form.Select className='col-md-4 mb-3' name='priority' value={newTask.priority} onChange={handleInputChange}>
+                <option value=''>Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </Form.Select>
+            <Button variant="success" onClick={addTask}>Add Task</Button>
+            </div>
         </div>
 
-        <ol>
-            {tasks.map((task, index) => 
-                <li key={index}>
-                    <span className='text'>{task}</span>
-                    <button className='delete-button' onClick={() => deleteTask(index)}>Delete</button>
-                    <button className='move-button' onClick={() => moveTaskUp(index)}>Up</button>
-                    <button className='move-button' onClick={() => moveTaskDown(index)}>Down</button>
-                </li>
+        <div className='container w-50'>
+        {tasks.map((task, index) => 
+                    <TaskItem key={index} task={task} index={index} onDelete={deleteTask} onMoveUp={moveTaskUp} onMoveDown={moveTaskDown}/>
             )}
-        </ol>
+        </div>
     </div>
     </>)
 }
